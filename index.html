@@ -27,27 +27,40 @@
         BODY, .system-input, SELECT, BUTTON, TABLE { TEXT-TRANSFORM: UPPERCASE; }
         .login-input { TEXT-TRANSFORM: NONE !important; }
 
-        BODY { FONT-FAMILY: 'Segoe UI', SANS-SERIF; BACKGROUND: var(--bg); COLOR: var(--text); MARGIN: 0; TRANSITION: BACKGROUND 0.3S; OVERFLOW-X: HIDDEN; }
-        #loginOverlay { POSITION: FIXED; TOP: 0; LEFT: 0; WIDTH: 100%; HEIGHT: 100%; BACKGROUND: var(--bg); DISPLAY: FLEX; ALIGN-ITEMS: CENTER; JUSTIFY-CONTENT: CENTER; Z-INDEX: 9999; }
-        .login-card { BACKGROUND: var(--card-bg); PADDING: 30PX; BORDER-RADIUS: 8PX; BORDER: 1PX SOLID var(--primary); TEXT-ALIGN: CENTER; WIDTH: 320PX; }
-        #mainContent { PADDING: 10PX; DISPLAY: NONE; }
-        .card { BACKGROUND: var(--card-bg); PADDING: 12PX; BORDER-RADIUS: 6PX; BORDER: 1PX SOLID var(--border); MARGIN-BOTTOM: 10PX; }
-        H2 { MARGIN: 0 0 10PX 0; COLOR: var(--primary); FONT-SIZE: 0.75REM; BORDER-BOTTOM: 1PX SOLID var(--border); PADDING-BOTTOM: 5PX; }
-        .form-group { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(120PX, 1FR)); GAP: 6PX; MARGIN-BOTTOM: 10PX; }
-        INPUT, SELECT, BUTTON { PADDING: 8PX; BORDER: 1PX SOLID var(--border); BORDER-RADIUS: 4PX; BACKGROUND: var(--input-bg); COLOR: var(--input-text); FONT-SIZE: 0.7REM; }
-        .stats-container { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(120PX, 1FR)); GAP: 8PX; MARGIN-BOTTOM: 15PX; }
-        .stat-box { PADDING: 10PX; BORDER-RADIUS: 4PX; TEXT-ALIGN: CENTER; FONT-WEIGHT: 900; FONT-SIZE: 0.7REM; BORDER: 2PX SOLID var(--border); BACKGROUND: var(--card-bg); }
-        TABLE { WIDTH: 100%; BORDER-COLLAPSE: COLLAPSE; }
-        TH, TD { TEXT-ALIGN: LEFT; PADDING: 6PX 4PX; BORDER-BOTTOM: 1PX SOLID var(--border); FONT-SIZE: 0.6REM; }
-        TH { COLOR: var(--primary); BACKGROUND: rgba(0,0,0,0.1); }
-        .status { PADDING: 2PX 6PX; BORDER-RADIUS: 3PX; FONT-WEIGHT: 900; COLOR: #FFF; }
+        BODY { FONT-FAMILY: 'Segoe UI', SANS-SERIF; BACKGROUND: var(--bg); COLOR: var(--text); PADDING: 0; MARGIN: 0; TRANSITION: BACKGROUND 0.3S; }
+        
+        /* LOGIN & MODAL */
+        #loginOverlay, .modal-overlay { POSITION: FIXED; TOP: 0; LEFT: 0; WIDTH: 100%; HEIGHT: 100%; BACKGROUND: RGBA(0,0,0,0.8); DISPLAY: FLEX; ALIGN-ITEMS: CENTER; JUSTIFY-CONTENT: CENTER; Z-INDEX: 9999; }
+        .login-card, .modal-card { BACKGROUND: var(--card-bg); PADDING: 25PX; BORDER-RADIUS: 8PX; BORDER: 1PX SOLID var(--primary); TEXT-ALIGN: CENTER; WIDTH: 320PX; BOX-SHADOW: 0 10PX 25PX RGBA(0,0,0,0.5); }
+
+        #mainContent { PADDING: 8PX; DISPLAY: NONE; }
+        .card { BACKGROUND: var(--card-bg); PADDING: 10PX; BORDER-RADIUS: 6PX; BORDER: 1PX SOLID var(--border); MARGIN-BOTTOM: 10PX; }
+        H2 { MARGIN-TOP: 0; COLOR: var(--primary); FONT-SIZE: 0.75REM; BORDER-BOTTOM: 1PX SOLID var(--border); PADDING-BOTTOM: 5PX; MARGIN-BOTTOM: 8PX; }
+
+        .form-group { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(100PX, 1FR)); GAP: 5PX; MARGIN-BOTTOM: 8PX; }
+        INPUT, BUTTON, SELECT { PADDING: 6PX; BORDER: 1PX SOLID var(--border); BORDER-RADIUS: 4PX; BACKGROUND: var(--input-bg); COLOR: var(--input-text); FONT-SIZE: 0.65REM; WIDTH: 100%; BOX-SIZING: BORDER-BOX; }
+        
+        .tag-list { DISPLAY: FLEX; GAP: 4PX; MARGIN-TOP: 5PX; FLEX-WRAP: WRAP; }
+        .tag { BACKGROUND: var(--bg); PADDING: 2PX 6PX; BORDER-RADIUS: 3PX; FONT-SIZE: 0.55REM; BORDER: 1PX SOLID var(--primary); DISPLAY: FLEX; ALIGN-ITEMS: CENTER; GAP: 3PX; }
+
+        .stats-container { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(110PX, 1FR)); GAP: 6PX; MARGIN-BOTTOM: 10PX; }
+        .stat-box { PADDING: 8PX; BORDER-RADIUS: 4PX; TEXT-ALIGN: CENTER; FONT-WEIGHT: 900; FONT-SIZE: 0.65REM; BORDER: 2PX SOLID var(--border); BACKGROUND: var(--card-bg); }
+
+        TABLE { WIDTH: 100%; BORDER-COLLAPSE: COLLAPSE; TABLE-LAYOUT: FIXED; }
+        TH, TD { TEXT-ALIGN: LEFT; PADDING: 4PX 2PX; BORDER-BOTTOM: 1PX SOLID var(--border); FONT-SIZE: 0.58REM; OVERFLOW: HIDDEN; TEXT-OVERFLOW: ELLIPSIS; WHITE-SPACE: NOWRAP; }
+        TH { BACKGROUND: var(--bg); COLOR: var(--primary); BORDER-BOTTOM: 2PX SOLID var(--primary); }
+        .filter-input { BACKGROUND: var(--input-bg); BORDER: 1PX SOLID var(--border); PADDING: 2PX; FONT-SIZE: 0.5REM; MARGIN-TOP: 2PX; WIDTH: 90%; COLOR: var(--input-text); }
+
+        .status { PADDING: 2PX 4PX; BORDER-RADIUS: 3PX; FONT-WEIGHT: 900; COLOR: #FFF; FONT-SIZE: 0.5REM; TEXT-ALIGN: CENTER; DISPLAY: BLOCK; WIDTH: 90%; }
         .st-vencido { BACKGROUND: var(--st-purple); }
         .st-a3 { BACKGROUND: var(--st-red); }
         .st-a2 { BACKGROUND: var(--st-orange); }
         .st-a1 { BACKGROUND: var(--st-yellow); COLOR: #000 !important; }
         .st-ok { BACKGROUND: var(--st-green); }
-        .btn-header { PADDING: 5PX 12PX; FONT-WEIGHT: BOLD; CURSOR: POINTER; BORDER-RADIUS: 4PX; BORDER: NONE; COLOR: #FFF; }
-        .btn-add { BACKGROUND: var(--primary); COLOR: #FFF; CURSOR: POINTER; BORDER: NONE; FONT-WEIGHT: BOLD; }
+
+        .btn-header { PADDING: 4PX 10PX; FONT-SIZE: 0.6REM; FONT-WEIGHT: BOLD; CURSOR: POINTER; BORDER: NONE; BORDER-RADIUS: 4PX; COLOR: WHITE; }
+        .btn-add { BACKGROUND: var(--primary); FONT-WEIGHT: BOLD; BORDER: NONE; CURSOR: POINTER; COLOR: WHITE; }
+        .btn-act { PADDING: 1PX 3PX; BORDER-RADIUS: 3PX; CURSOR: POINTER; BORDER: 1PX SOLID var(--border); COLOR: var(--input-text); FONT-SIZE: 0.5REM; BACKGROUND: var(--bg); MARGIN-RIGHT: 1PX; MIN-WIDTH: 20PX; HEIGHT: 20PX; }
     </style>
 </head>
 <body data-theme="dark">
@@ -55,47 +68,82 @@
 <div id="loginOverlay">
     <div class="login-card">
         <h2 style="BORDER: NONE;">🔐 METROLOGIA V26.3 CLOUD</h2>
-        <input type="email" id="email" class="login-input" placeholder="seu@email.com" style="MARGIN-BOTTOM: 10PX; WIDTH: 100%;">
-        <input type="password" id="pass" class="login-input" placeholder="senha" style="MARGIN-BOTTOM: 15PX; WIDTH: 100%;">
-        <button class="btn-add" id="btnLogin" style="WIDTH: 100%; PADDING: 10PX;">ENTRAR NO SISTEMA</button>
+        <input type="email" id="email" class="login-input" placeholder="seu@email.com" style="MARGIN-BOTTOM: 10PX;">
+        <input type="password" id="pass" class="login-input" placeholder="senha" style="MARGIN-BOTTOM: 15PX;">
+        <button class="btn-add" id="btnLogin" style="WIDTH: 100%; PADDING: 10PX;">ENTRAR / SINCRONIZAR</button>
         <p id="loginMsg" style="FONT-SIZE: 0.6REM; MARGIN-TOP: 10PX; COLOR: var(--st-red);"></p>
+    </div>
+</div>
+
+<div id="updateModal" class="modal-overlay" style="DISPLAY: NONE;">
+    <div class="modal-card">
+        <h2 style="COLOR: var(--st-orange);">📅 ATUALIZAR CALIBRAÇÃO</h2>
+        <p id="modalInstrTag" style="FONT-SIZE: 0.7REM; MARGIN-BOTTOM: 15PX; FONT-WEIGHT: BOLD;"></p>
+        <input type="hidden" id="modalId">
+        <label style="FONT-SIZE: 0.6REM; DISPLAY: BLOCK; TEXT-ALIGN: LEFT; MARGIN-BOTTOM: 5PX;">NOVA DATA DA ÚLTIMA CALIBRAÇÃO:</label>
+        <input type="date" id="modalNewDate" style="MARGIN-BOTTOM: 15PX;">
+        <div style="DISPLAY: FLEX; GAP: 10PX;">
+            <button class="btn-add" id="btnConfirmUpdate" style="BACKGROUND: var(--st-green);">CONFIRMAR</button>
+            <button class="btn-add" onclick="closeUpdateModal()" style="BACKGROUND: var(--st-red);">CANCELAR</button>
+        </div>
     </div>
 </div>
 
 <div id="mainContent">
     <div class="container">
-        <header style="DISPLAY: FLEX; JUSTIFY-CONTENT: SPACE-BETWEEN; ALIGN-ITEMS: CENTER; MARGIN-BOTTOM: 15PX; BORDER-BOTTOM: 2PX SOLID var(--primary); PADDING-BOTTOM: 8PX;">
-            <h1 style="FONT-SIZE: 1REM; COLOR: var(--primary); MARGIN: 0; FONT-WEIGHT: 900;">📏 METROLOGIA V26.3 CLOUD</h1>
-            <div style="DISPLAY: FLEX; GAP: 8PX;">
-                <button class="btn-header" style="BACKGROUND: #64748B;" onclick="toggleTheme()">🌓 TEMA</button>
+        <header style="DISPLAY: FLEX; JUSTIFY-CONTENT: SPACE-BETWEEN; ALIGN-ITEMS: CENTER; MARGIN-BOTTOM: 10PX; BORDER-BOTTOM: 2PX SOLID var(--primary); PADDING-BOTTOM: 5PX;">
+            <h1 style="FONT-SIZE: 0.9REM; COLOR: var(--primary); MARGIN: 0; FONT-WEIGHT: 900;">📏 METROLOGIA V26.3 CLOUD</h1>
+            <div style="DISPLAY: FLEX; GAP: 6PX;">
+                <button class="btn-header" style="BACKGROUND: #64748B;" id="btnTheme">🌓 TEMA</button>
                 <button class="btn-header" style="BACKGROUND: var(--st-green);" id="btnCloudSave">💾 SALVAR NUVEM</button>
                 <button class="btn-header" style="BACKGROUND: var(--st-red);" id="btnLogout">SAIR</button>
             </div>
         </header>
 
+        <div style="DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: 1FR 1FR; GAP: 8PX; MARGIN-BOTTOM: 8PX;">
+            <div class="card">
+                <h2>🏢 UNIDADES</h2>
+                <div style="DISPLAY: FLEX; GAP: 4PX;"><INPUT TYPE="TEXT" ID="newUnit" class="system-input" PLACEHOLDER="NOVA UNID"><BUTTON CLASS="btn-add" id="btnAddUnit" STYLE="WIDTH: 35PX;">+</BUTTON></div>
+                <div ID="unitList" CLASS="tag-list"></div>
+            </div>
+            <div class="card">
+                <h2>🔬 TIPO DE INSTRUMENTO</h2>
+                <div style="DISPLAY: FLEX; GAP: 4PX;"><INPUT TYPE="TEXT" ID="newFam" class="system-input" PLACEHOLDER="NOVO TIPO"><BUTTON CLASS="btn-add" id="btnAddFam" STYLE="WIDTH: 35PX;">+</BUTTON></div>
+                <div ID="famList" CLASS="tag-list"></div>
+            </div>
+        </div>
+
         <div class="card">
-            <h2 id="formTitle">➕ REGISTRAR INSTRUMENTO</h2>
+            <h2 id="formTitle">➕ NOVO REGISTRO</h2>
             <div class="form-group">
                 <input type="hidden" id="editId">
                 <input type="text" id="tag" class="system-input" placeholder="TAG">
+                <select id="unitSelect"></select>
+                <select id="famSelect"></select>
                 <input type="text" id="cert" class="system-input" placeholder="CERTIFICADO">
+                <input type="text" id="lacre" class="system-input" placeholder="LACRE">
                 <input type="date" id="last">
-                <input type="number" id="period" placeholder="PERIODICIDADE (MESES)">
-                <button class="btn-add" id="btnSaveRecord">SALVAR REGISTRO</button>
+                <input type="number" id="period" placeholder="MESES">
+                <input type="text" id="range" class="system-input" placeholder="RANGE">
+                <input type="text" id="vinculo" class="system-input" placeholder="VINCULO">
+                <button class="btn-add" id="btnSaveRecord">REGISTRAR DADOS</button>
             </div>
         </div>
 
         <div class="stats-container" id="statsPanel"></div>
 
         <div class="card" style="OVERFLOW-X: AUTO;">
-            <table id="mainTable">
+            <table>
                 <thead>
                     <tr>
-                        <th>TAG</th>
-                        <th>CERTIFICADO</th>
-                        <th>ÚLT. CALIBRAÇÃO</th>
-                        <th>VENCIMENTO</th>
-                        <th>STATUS / DIAS</th>
+                        <th>TAG<br><input type="text" class="filter-input" data-col="0"></th>
+                        <th>UNID.<br><input type="text" class="filter-input" data-col="1"></th>
+                        <th>CERT.<br><input type="text" class="filter-input" data-col="2"></th>
+                        <th>LACRE<br><input type="text" class="filter-input" data-col="3"></th>
+                        <th>ULT.<br><input type="text" class="filter-input" data-col="4"></th>
+                        <th>STATUS<br><input type="text" class="filter-input" data-col="5"></th>
+                        <th>PRÓX.<br><input type="text" class="filter-input" data-col="6"></th>
+                        <th>RANGE<br><input type="text" class="filter-input" data-col="7"></th>
                         <th>AÇÕES</th>
                     </tr>
                 </thead>
@@ -116,118 +164,199 @@
         projectId: "controle-de-instrumentos",
         storageBucket: "controle-de-instrumentos.firebasestorage.app",
         messagingSenderId: "596225663409",
-        appId: "1:596225663409:web:be8d7abff0a6110e55dd90",
-        measurementId: "G-QMFPJ7EKHG"
+        appId: "1:596225663409:web:be8d7abff0a6110e55dd90"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getDatabase(app);
+    const dbCloud = getDatabase(app);
 
-    let localData = [];
+    let db = [];
+    let units = ["LAB"];
+    let fams = ["DIM"];
 
     // --- AUTENTICAÇÃO ---
-    window.login = () => {
-        const email = document.getElementById('email').value;
-        const pass = document.getElementById('pass').value;
-        signInWithEmailAndPassword(auth, email, pass)
-            .catch(err => document.getElementById('loginMsg').innerText = "FALHA: " + err.message);
-    };
+    document.getElementById('btnLogin').addEventListener('click', () => {
+        const e = document.getElementById('email').value;
+        const p = document.getElementById('pass').value;
+        signInWithEmailAndPassword(auth, e, p).catch(err => document.getElementById('loginMsg').innerText = "ERRO: " + err.message);
+    });
 
-    document.getElementById('btnLogin').addEventListener('click', window.login);
-    document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+    document.getElementById('btnLogout').addEventListener('click', () => signOut(auth).then(() => location.reload()));
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-            syncFromCloud(user.uid);
+            loadData(user.uid);
         } else {
             document.getElementById('loginOverlay').style.display = 'flex';
-            document.getElementById('mainContent').style.display = 'none';
         }
     });
 
-    // --- SINCRONIZAÇÃO ---
-    function syncFromCloud(uid) {
-        const userRef = ref(db, 'users/' + uid);
-        onValue(userRef, (snapshot) => {
-            const data = snapshot.val();
-            localData = data ? data.instruments || [] : [];
-            renderTable();
+    function loadData(uid) {
+        onValue(ref(dbCloud, 'users/' + uid), (snap) => {
+            const data = snap.val();
+            if(data) {
+                db = data.db || [];
+                units = data.units || ["LAB"];
+                fams = data.fams || ["DIM"];
+                renderManagers();
+                renderTable();
+            }
         });
     }
 
     document.getElementById('btnCloudSave').addEventListener('click', () => {
         const user = auth.currentUser;
-        if (user) {
-            set(ref(db, 'users/' + user.uid), { instruments: localData })
-                .then(() => alert("✅ NUVEM ATUALIZADA COM SUCESSO!"));
+        if(user) {
+            set(ref(dbCloud, 'users/' + user.uid), { db, units, fams })
+            .then(() => alert("☁️ DADOS SINCRONIZADOS!"));
         }
     });
 
-    // --- LÓGICA DE NEGÓCIO ---
-    window.addItem = () => {
-        const item = {
-            id: Date.now(),
-            tag: document.getElementById('tag').value,
-            cert: document.getElementById('cert').value,
-            last: document.getElementById('last').value,
-            period: parseInt(document.getElementById('period').value)
-        };
-        if(!item.tag || !item.last) return alert("PREENCHA OS CAMPOS!");
-        localData.push(item);
-        renderTable();
-        clearForm();
+    // --- LÓGICA DO MODAL DE ATUALIZAÇÃO (ITEM 2) ---
+    window.openUpdateModal = (id) => {
+        const i = db.find(x => x.id === id);
+        document.getElementById('modalId').value = i.id;
+        document.getElementById('modalInstrTag').innerText = "INSTRUMENTO: " + i.tag;
+        document.getElementById('modalNewDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('updateModal').style.display = 'flex';
     };
 
-    document.getElementById('btnSaveRecord').addEventListener('click', window.addItem);
+    window.closeUpdateModal = () => { document.getElementById('updateModal').style.display = 'none'; };
+
+    document.getElementById('btnConfirmUpdate').addEventListener('click', () => {
+        const id = parseInt(document.getElementById('modalId').value);
+        const newDate = document.getElementById('modalNewDate').value;
+        if(newDate) {
+            const index = db.findIndex(x => x.id === id);
+            db[index].last = newDate;
+            renderTable();
+            closeUpdateModal();
+        }
+    });
+
+    // --- GERENCIADORES ---
+    function renderManagers() {
+        const ul = document.getElementById('unitList'), fl = document.getElementById('famList');
+        const us = document.getElementById('unitSelect'), fs = document.getElementById('famSelect');
+        ul.innerHTML = fl.innerHTML = ''; us.innerHTML = '<option value="">UNID.</option>'; fs.innerHTML = '<option value="">TIPO INSTR.</option>';
+        units.forEach(u => {
+            ul.innerHTML += `<div class="tag">${u} <button onclick="window.delUnit('${u}')">✕</button></div>`;
+            us.innerHTML += `<option value="${u}">${u}</option>`;
+        });
+        fams.forEach(f => {
+            fl.innerHTML += `<div class="tag">${f} <button onclick="window.delFam('${f}')">✕</button></div>`;
+            fs.innerHTML += `<option value="${f}">${f}</option>`;
+        });
+    }
+
+    window.delUnit = (u) => { units = units.filter(i => i !== u); renderManagers(); };
+    window.delFam = (f) => { fams = fams.filter(i => i !== f); renderManagers(); };
+    
+    document.getElementById('btnAddUnit').addEventListener('click', () => {
+        const v = document.getElementById('newUnit').value.trim().toUpperCase();
+        if(v) { units.push(v); renderManagers(); document.getElementById('newUnit').value=''; }
+    });
+    
+    document.getElementById('btnAddFam').addEventListener('click', () => {
+        const v = document.getElementById('newFam').value.trim().toUpperCase();
+        if(v) { fams.push(v); renderManagers(); document.getElementById('newFam').value=''; }
+    });
+
+    // --- TABELA E REGISTROS ---
+    document.getElementById('btnSaveRecord').addEventListener('click', () => {
+        const editId = document.getElementById('editId').value;
+        const item = {
+            id: editId ? parseInt(editId) : Date.now(),
+            tag: document.getElementById('tag').value.toUpperCase(),
+            unit: document.getElementById('unitSelect').value,
+            family: document.getElementById('famSelect').value,
+            cert: document.getElementById('cert').value.toUpperCase(),
+            lacre: document.getElementById('lacre').value.toUpperCase(),
+            last: document.getElementById('last').value,
+            period: parseInt(document.getElementById('period').value),
+            range: document.getElementById('range').value.toUpperCase(),
+            vinculo: document.getElementById('vinculo').value.toUpperCase()
+        };
+        if(!item.tag || !item.last || !item.period) return alert("ERRO: CAMPOS VAZIOS!");
+        if(editId) { db[db.findIndex(x => x.id == editId)] = item; document.getElementById('formTitle').innerText = "➕ NOVO REGISTRO"; } 
+        else { db.push(item); }
+        renderTable(); clearForm();
+    });
 
     function renderTable() {
         const body = document.getElementById('inventoryBody');
-        body.innerHTML = '';
-        let stats = {v:0, a:0, ok:0};
+        const filters = Array.from(document.querySelectorAll('.filter-input')).map(i => i.value.toUpperCase());
+        body.innerHTML = ''; 
+        let c = {v:0, a3:0, a2:0, a1:0, ok:0};
 
-        localData.forEach(i => {
-            const d = new Date(i.last); d.setMonth(d.getMonth() + i.period);
-            const diff = Math.ceil((d - new Date()) / (1000 * 60 * 60 * 24));
-            
-            let sc = "st-ok"; 
-            if(diff <= 0) { sc = "st-vencido"; stats.v++; }
-            else if(diff <= 30) { sc = "st-a2"; stats.a++; }
-            else { stats.ok++; }
+        db.forEach(i => {
+            const nxt = new Date(i.last); nxt.setMonth(nxt.getMonth() + i.period);
+            const diff = Math.ceil((nxt - new Date().setHours(0,0,0,0))/86400000);
+            let sc = "st-ok", txt = diff + "D";
+            if(diff <= 0) { sc = "st-vencido"; txt = "VENCIDO"; c.v++; }
+            else if(diff <= 15) { sc = "st-a3"; c.a3++; }
+            else if(diff <= 30) { sc = "st-a2"; c.a2++; }
+            else if(diff <= 60) { sc = "st-a1"; c.a1++; }
+            else { c.ok++; }
 
-            body.innerHTML += `<tr>
-                <td>${i.tag}</td><td>${i.cert}</td><td>${i.last}</td>
-                <td>${d.toLocaleDateString()}</td>
-                <td><span class="status ${sc}">${diff <= 0 ? 'VENCIDO' : diff + ' DIAS'}</span></td>
-                <td><button onclick="window.removeItem(${i.id})" style="color:red; background:none; border:none; cursor:pointer;">❌</button></td>
-            </tr>`;
+            const dU = new Date(i.last).toLocaleDateString('PT-BR');
+            const dP = nxt.toLocaleDateString('PT-BR');
+            const rowData = [i.tag, i.unit, i.cert, i.lacre, dU, txt, dP, i.range];
+            const match = rowData.every((v, idx) => (v||"").toString().toUpperCase().includes(filters[idx] || ""));
+
+            if(match) {
+                body.innerHTML += `<tr>
+                    <td><b>${i.tag}</b></td><td>${i.unit}</td><td>${i.cert}</td><td>${i.lacre}</td><td>${dU}</td>
+                    <td><span class="status ${sc}">${txt}</span></td><td>${dP}</td><td>${i.range}</td>
+                    <td>
+                        <button onclick="window.editItem(${i.id})" class="btn-act">ED</button>
+                        <button onclick="window.openUpdateModal(${i.id})" class="btn-act" style="color:var(--st-orange)">AT</button>
+                        <button onclick="window.delItem(${i.id})" class="btn-act" style="color:var(--st-red)">X</button>
+                    </td>
+                </tr>`;
+            }
         });
-        
+        updateStats(c);
+    }
+
+    function updateStats(c) {
         document.getElementById('statsPanel').innerHTML = `
-            <div class="stat-box" style="color:var(--st-purple)">VENCIDOS: ${stats.v}</div>
-            <div class="stat-box" style="color:var(--st-orange)">ALERTA (30D): ${stats.a}</div>
-            <div class="stat-box" style="color:var(--st-green)">EM DIA: ${stats.ok}</div>
-        `;
+            <div class="stat-box" style="color:var(--st-purple)">VENCIDO: ${c.v}</div>
+            <div class="stat-box" style="color:var(--st-red)">CRÍTICO: ${c.a3}</div>
+            <div class="stat-box" style="color:var(--st-orange)">ALERTA: ${c.a2}</div>
+            <div class="stat-box" style="color:var(--st-yellow)">AVISO: ${c.a1}</div>
+            <div class="stat-box" style="color:var(--st-green)">OK: ${c.ok}</div>`;
     }
 
-    window.removeItem = (id) => {
-        localData = localData.filter(x => x.id !== id);
-        renderTable();
+    window.editItem = (id) => {
+        const i = db.find(x => x.id === id);
+        document.getElementById('editId').value = i.id;
+        document.getElementById('tag').value = i.tag;
+        document.getElementById('unitSelect').value = i.unit;
+        document.getElementById('famSelect').value = i.family;
+        document.getElementById('cert').value = i.cert;
+        document.getElementById('lacre').value = i.lacre;
+        document.getElementById('last').value = i.last;
+        document.getElementById('period').value = i.period;
+        document.getElementById('range').value = i.range;
+        document.getElementById('vinculo').value = i.vinculo;
+        document.getElementById('formTitle').innerText = "📝 EDITANDO";
+        window.scrollTo(0,0);
     };
 
-    function clearForm() {
-        document.getElementById('tag').value = '';
-        document.getElementById('cert').value = '';
-        document.getElementById('last').value = '';
-    }
-
-    window.toggleTheme = () => {
-        const b = document.body;
-        const current = b.getAttribute('data-theme');
-        b.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-    };
+    window.delItem = (id) => { if(confirm("EXCLUIR?")) { db = db.filter(x => x.id !== id); renderTable(); } };
+    function clearForm() { ['tag', 'cert', 'lacre', 'period', 'range', 'vinculo', 'editId', 'last'].forEach(id => document.getElementById(id).value = ''); }
+    document.querySelectorAll('.filter-input').forEach(input => input.addEventListener('keyup', renderTable));
+    
+    document.getElementById('btnTheme').addEventListener('click', () => {
+        const t = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', t);
+        localStorage.setItem('met_theme', t);
+    });
+    document.body.setAttribute('data-theme', localStorage.getItem('met_theme') || 'dark');
 </script>
 </body>
 </html>
