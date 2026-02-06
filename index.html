@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METROLOGIA V26.3 CLOUD</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <style>
+        :root {
+            --bg: #0F172A; --card-bg: #1E293B; --text: #F1F5F9;
+            --primary: #3B82F6; --border: #334155;
+            --input-bg: #1E293B; --input-text: #FFFFFF;
+            --st-purple: #C084FC; --st-red: #F87171;    
+            --st-orange: #FB923C; --st-yellow: #FACC15; 
+            --st-green: #4ADE80;  
+        }
+
+        [data-theme="light"] {
+            --bg: #F8FAFC; --card-bg: #FFFFFF; --text: #1E293B;
+            --primary: #2563EB; --border: #E2E8F0;
+            --input-bg: #FFFFFF; --input-text: #0F172A;
+            --st-purple: #9333EA; --st-red: #DC2626;    
+            --st-orange: #EA580C; --st-yellow: #CA8A04; 
+            --st-green: #16A34A;
+        }
+
+        /* PADRÃO DE MAIÚSCULAS PARA O SISTEMA (EXCETO LOGIN) */
+        BODY, .system-input, SELECT, BUTTON, TABLE { TEXT-TRANSFORM: UPPERCASE; }
+        
+        /* EXCEÇÃO PARA O LOGIN */
+        .login-input { TEXT-TRANSFORM: NONE !important; }
+
+        BODY { FONT-FAMILY: 'Segoe UI', SANS-SERIF; BACKGROUND: var(--bg); COLOR: var(--text); PADDING: 0; MARGIN: 0; TRANSITION: BACKGROUND 0.3S; }
+        
+        #loginOverlay { POSITION: FIXED; TOP: 0; LEFT: 0; WIDTH: 100%; HEIGHT: 100%; BACKGROUND: var(--bg); DISPLAY: FLEX; ALIGN-ITEMS: CENTER; JUSTIFY-CONTENT: CENTER; Z-INDEX: 9999; }
+        .login-card { BACKGROUND: var(--card-bg); PADDING: 30PX; BORDER-RADIUS: 8PX; BORDER: 1PX SOLID var(--primary); TEXT-ALIGN: CENTER; WIDTH: 300PX; }
+
+        #mainContent { PADDING: 8PX; DISPLAY: NONE; }
+        .card { BACKGROUND: var(--card-bg); PADDING: 10PX; BORDER-RADIUS: 6PX; BORDER: 1PX SOLID var(--border); MARGIN-BOTTOM: 10PX; }
+        H2 { MARGIN-TOP: 0; COLOR: var(--primary); FONT-SIZE: 0.75REM; BORDER-BOTTOM: 1PX SOLID var(--border); PADDING-BOTTOM: 5PX; MARGIN-BOTTOM: 8PX; }
+
+        .form-group { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(100PX, 1FR)); GAP: 5PX; MARGIN-BOTTOM: 8PX; }
+        INPUT, BUTTON, SELECT { PADDING: 6PX; BORDER: 1PX SOLID var(--border); BORDER-RADIUS: 4PX; BACKGROUND: var(--input-bg); COLOR: var(--input-text); FONT-SIZE: 0.65REM; WIDTH: 100%; BOX-SIZING: BORDER-BOX; }
+        
+        .manager-row { DISPLAY: GRID; GRID-TEMPLATE-COLUMNS: 1FR 1FR; GAP: 8PX; MARGIN-BOTTOM: 8PX; }
+        .tag-list { DISPLAY: FLEX; GAP: 4PX; FLEX-WRAP: WRAP; }
+        .tag { BACKGROUND: var(--bg); PADDING: 2PX 6PX; BORDER-RADIUS: 3PX; FONT-SIZE: 0.55REM; BORDER: 1PX SOLID var(--primary); DISPLAY: FLEX; ALIGN-ITEMS: CENTER; GAP: 3PX; }
+
+        TABLE { WIDTH: 100%; BORDER-COLLAPSE: COLLAPSE; TABLE-LAYOUT: FIXED; }
+        TH, TD { TEXT-ALIGN: LEFT; PADDING: 4PX 2PX; BORDER-BOTTOM: 1PX SOLID var(--border); FONT-SIZE: 0.58REM; OVERFLOW: HIDDEN; WHITE-SPACE: NOWRAP; }
+        TH { BACKGROUND: var(--bg); COLOR: var(--primary); BORDER-BOTTOM: 2PX SOLID var(--primary); }
+
+        .status { PADDING: 2PX 4PX; BORDER-RADIUS: 3PX; FONT-WEIGHT: 900; COLOR: #FFF; FONT-SIZE: 0.5REM; TEXT-ALIGN: CENTER; }
+        .st-vencido { BACKGROUND: var(--st-purple); }
+        .st-a3 { BACKGROUND: var(--st-red); }
+        .st-a2 { BACKGROUND: var(--st-orange); }
+        .st-a1 { BACKGROUND: var(--st-yellow); COLOR: #000 !important; }
+        .st-ok { BACKGROUND: var(--st-green); }
+
+        .btn-header { PADDING: 4PX 10PX; FONT-SIZE: 0.6REM; FONT-WEIGHT: BOLD; CURSOR: POINTER; BORDER: NONE; BORDER-RADIUS: 4PX; COLOR: WHITE; }
+        .btn-add { BACKGROUND: var(--primary); FONT-WEIGHT: BOLD; CURSOR: POINTER; COLOR: WHITE; BORDER: NONE; }
+        .btn-act { PADDING: 1PX 3PX; BORDER-RADIUS: 3PX; CURSOR: POINTER; BORDER: 1PX SOLID var(--border); COLOR: var(--input-text); BACKGROUND: var(--bg); MIN-WIDTH: 20PX; HEIGHT: 20PX; }
+    </style>
+</head>
+<body data-theme="dark">
+
+<div id="loginOverlay">
+    <div class="login-card">
+        <h2 style="BORDER: NONE;">🔐 ACESSO V26.3 CLOUD</h2>
+        <input type="email" id="email" class="login-input" placeholder="email (caixa alta ou baixa)" style="MARGIN-BOTTOM: 10PX;">
+        <input type="password" id="pass" class="login-input" placeholder="senha (caixa alta ou baixa)" style="MARGIN-BOTTOM: 15PX;">
+        <button class="btn-add" onclick="login()">ENTRAR / SINCRONIZAR</button>
+        <p id="loginMsg" style="FONT-SIZE: 0.5REM; MARGIN-TOP: 10PX; COLOR: var(--st-red);"></p>
+    </div>
+</div>
+
+<div id="mainContent">
+    <div class="container">
+        <header style="DISPLAY: FLEX; JUSTIFY-CONTENT: SPACE-BETWEEN; ALIGN-ITEMS: CENTER; MARGIN-BOTTOM: 10PX; BORDER-BOTTOM: 2PX SOLID var(--primary); PADDING-BOTTOM: 5PX;">
+            <h1 style="FONT-SIZE: 0.9REM; COLOR: var(--primary); MARGIN: 0; FONT-WEIGHT: 900;">📏 METROLOGIA V26.3 CLOUD</h1>
+            <div style="DISPLAY: FLEX; GAP: 6PX;">
+                <button class="btn-header" style="BACKGROUND: #64748B;" onclick="toggleTheme()">🌓 TEMA</button>
+                <button class="btn-header" style="BACKGROUND: var(--st-green);" onclick="saveToCloud()">💾 SALVAR NUVEM</button>
+                <button class="btn-header" style="BACKGROUND: var(--st-red);" onclick="logout()">SAIR</button>
+            </div>
+        </header>
+
+        <div class="card">
+            <h2 id="formTitle">➕ NOVO REGISTRO</h2>
+            <div class="form-group">
+                <input type="hidden" id="editId">
+                <input type="text" id="tag" class="system-input" placeholder="TAG">
+                <select id="unitSelect"></select>
+                <select id="famSelect"></select>
+                <input type="text" id="cert" class="system-input" placeholder="CERTIFICADO">
+                <input type="date" id="last">
+                <input type="number" id="period" placeholder="MESES">
+                <button class="btn-add" id="btnSave" onclick="addItem()">REGISTRAR</button>
+            </div>
+        </div>
+
+        <div class="stats-container" id="statsPanel"></div>
+
+        <div class="card" style="OVERFLOW-X: AUTO;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="WIDTH: 15%;">TAG</th>
+                        <th style="WIDTH: 15%;">UNID.</th>
+                        <th style="WIDTH: 15%;">ULT. CAL.</th>
+                        <th style="WIDTH: 20%;">STATUS</th>
+                        <th style="WIDTH: 20%;">AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- O RESTANTE DA LÓGICA DE FIREBASE PERMANECE A MESMA ---
+    // (Lembre-se de inserir suas chaves do Firebase aqui para o Cloud funcionar)
+    const firebaseConfig = {
+        apiKey: "SUA_API_KEY",
+        authDomain: "SEU_PROJETO.firebaseapp.com",
+        databaseURL: "https://SEU_PROJETO.firebaseio.com",
+        projectId: "SEU_PROJETO",
+        storageBucket: "SEU_PROJETO.appspot.com",
+        messagingSenderId: "ID",
+        appId: "APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const dbCloud = firebase.database();
+
+    let db = [];
+    let units = ["LAB"];
+    let fams = ["DIM"];
+
+    function login() {
+        const e = document.getElementById('email').value; // PEGA EXATAMENTE O QUE FOI DIGITADO
+        const p = document.getElementById('pass').value;
+        auth.signInWithEmailAndPassword(e, p)
+            .then(res => {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadFromCloud(res.user.uid);
+            })
+            .catch(err => document.getElementById('loginMsg').innerText = "ERRO: " + err.message);
+    }
+
+    function logout() { auth.signOut().then(() => location.reload()); }
+
+    function saveToCloud() {
+        const user = auth.currentUser;
+        if(user) {
+            dbCloud.ref('users/' + user.uid).set({ db, units, fams })
+            .then(() => alert("☁️ DADOS SINCRONIZADOS!"));
+        }
+    }
+
+    function loadFromCloud(uid) {
+        dbCloud.ref('users/' + uid).once('value').then(snap => {
+            const data = snap.val();
+            if(data) {
+                db = data.db || [];
+                units = data.units || ["LAB"];
+                fams = data.fams || ["DIM"];
+                renderTable();
+            }
+        });
+    }
+
+    function renderTable() {
+        const body = document.getElementById('inventoryBody');
+        body.innerHTML = ''; 
+        db.forEach(i => {
+            const nxt = new Date(i.last); nxt.setMonth(nxt.getMonth() + i.period);
+            const diff = Math.ceil((nxt - new Date().setHours(0,0,0,0))/86400000);
+            let sc = "st-ok", txt = diff + "D";
+            if(diff <= 0) { sc = "st-vencido"; txt = "VENCIDO"; }
+            
+            body.innerHTML += `<tr>
+                <td><b>${i.tag}</b></td><td>${i.unit}</td><td>${i.last}</td>
+                <td><span class="status ${sc}">${txt}</span></td>
+                <td><button onclick="editItem(${i.id})" class="btn-act">ED</button></td>
+            </tr>`;
+        });
+    }
+
+    function toggleTheme() {
+        const t = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', t);
+    }
+</script>
+</body>
+</html>
