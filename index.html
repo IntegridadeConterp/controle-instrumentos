@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>METROLOGIA V26.3 CLOUD</title>
     
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
     <style>
         :root {
             --bg: #0F172A; --card-bg: #1E293B; --text: #F1F5F9;
@@ -95,6 +97,7 @@
             <h1 style="FONT-SIZE: 0.9REM; COLOR: var(--primary); MARGIN: 0; FONT-WEIGHT: 900;">📏 METROLOGIA V26.3 CLOUD</h1>
             <div style="DISPLAY: FLEX; GAP: 6PX;">
                 <button class="btn-header" style="BACKGROUND: #64748B;" id="btnTheme">🌓 TEMA</button>
+                <button class="btn-header" style="BACKGROUND: var(--st-purple);" id="btnExportExcel">📊 EXCEL</button>
                 <button class="btn-header" style="BACKGROUND: var(--st-green);" id="btnCloudSave">💾 SALVAR NUVEM</button>
                 <button class="btn-header" style="BACKGROUND: var(--st-red);" id="btnLogout">SAIR</button>
             </div>
@@ -215,7 +218,33 @@
         }
     });
 
-    // --- LÓGICA DO MODAL DE ATUALIZAÇÃO (ITEM 2) ---
+    // --- EXPORTAR EXCEL ---
+    document.getElementById('btnExportExcel').addEventListener('click', () => {
+        if(db.length === 0) return alert("NÃO HÁ DADOS PARA EXPORTAR!");
+        
+        const dataParaExportar = db.map(i => {
+            const nxt = new Date(i.last); nxt.setMonth(nxt.getMonth() + i.period);
+            return {
+                "TAG": i.tag,
+                "UNIDADE": i.unit,
+                "TIPO": i.family,
+                "CERTIFICADO": i.cert,
+                "LACRE": i.lacre,
+                "ULTIMA CALIBRAÇÃO": i.last,
+                "PERIODICIDADE (MESES)": i.period,
+                "VENCIMENTO": nxt.toLocaleDateString('PT-BR'),
+                "RANGE": i.range,
+                "VINCULO": i.vinculo
+            };
+        });
+
+        const worksheet = XLSX.utils.json_to_sheet(dataParaExportar);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "METROLOGIA");
+        XLSX.writeFile(workbook, `RELATORIO_METROLOGIA_${new Date().toLocaleDateString().replace(/\//g, '-')}.xlsx`);
+    });
+
+    // --- MODAL ATUALIZAÇÃO ---
     window.openUpdateModal = (id) => {
         const i = db.find(x => x.id === id);
         document.getElementById('modalId').value = i.id;
@@ -265,7 +294,7 @@
         if(v) { fams.push(v); renderManagers(); document.getElementById('newFam').value=''; }
     });
 
-    // --- TABELA E REGISTROS ---
+    // --- TABELA ---
     document.getElementById('btnSaveRecord').addEventListener('click', () => {
         const editId = document.getElementById('editId').value;
         const item = {
